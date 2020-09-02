@@ -23,10 +23,12 @@ enum custom_keycodes {
   RGB_RST = SAFE_RANGE
 };
 
-#define XX_G_JA LGUI_T(KC_LANG1) // cmd or win
-#define XX_G_EN RGUI_T(KC_LANG2) // cmd or win
+#define XX_G_JA RGUI_T(KC_LANG1) // cmd or win
+#define XX_G_EN LGUI_T(KC_LANG2) // cmd or win
 #define XX_SPCR LT(_RAISE, KC_SPC) // raise or spc
 #define XX_SPCL LT(_LOWER, KC_SPC) // lower or spc
+//#define XX_JA_L LT(_LOWER, KC_LANG1) // lower or JA
+#define XX_EN_L LT(_LOWER, KC_LANG2) // lower or EN
 #define XX_TG_R TG(_RAISE)
 #define XX_TG_L TG(_LOWER)
 #define XX_TG_A TG(_ADJUST)
@@ -43,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, DM_PLY1,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               KC_LALT, XX_G_EN, XX_SPCL, XX_SPCR,              XX_SPCR, XX_SPCL,          XX_G_JA, XX_TG_L
+               KC_LALT, KC_LGUI, XX_EN_L, XX_SPCR,              XX_SPCR, XX_SPCL,          XX_G_JA, XX_TG_L
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
