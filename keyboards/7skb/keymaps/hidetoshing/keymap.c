@@ -14,8 +14,8 @@ extern uint8_t is_master;
 // entirely and just use numbers.
 enum layer_number {
   _QWERTY = 0,
-  _LOWER,
   _RAISE,
+  _LOWER,
   _ADJUST,
 };
 
@@ -56,9 +56,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
       _______, KC_EXLM, KC_AT  , KC_HASH, KC_DLR , KC_PERC,     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, KC_TILD,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
-      _______, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,     KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_PIPE, _______,
+      _______, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,     KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_DQUO, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-      _______, KC_MINS, KC_EQL , KC_GRV , KC_LBRC, KC_RBRC,     KC_BSLS, KC_SCLN, KC_COMM, KC_DOT , KC_SLSH, _______, KC_LOCK,
+      _______, KC_MINS, KC_EQL , KC_GRV , KC_LBRC, KC_RBRC,     KC_BSLS, KC_COLN, KC_LABK, KC_RABK, KC_QUES, _______, KC_LOCK,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
                _______, _______, _______, _______,              _______, _______,          KC_ESC , XX_TG_R
           //`---------------------------------------------|   |--------------------------------------------'
@@ -84,13 +84,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
       XX_TG_A, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_MPLY, KC_VOLU, KC_VOLD, KC_MUTE, KC_MSTP,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_VAI, RGB_VAD, XXXXXXX,
+      XXXXXXX, KC_MPLY, KC_VOLU, KC_VOLD, KC_MUTE, KC_MSTP,     RGB_HUI, RGB_SAI, RGB_VAI, RGB_RST, RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,              XXXXXXX, XXXXXXX,          KC_STOP, XXXXXXX
+               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,              RGB_M_T, RGB_TOG,          KC_STOP, XXXXXXX
           //`---------------------------------------------|   |--------------------------------------------'
   )
 };
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 //A description for expressing the layer position in LED mode.
 layer_state_t layer_state_set_user(layer_state_t state) {
-  state = update_tri_layer_state(state, _RAISE, _LOWER, _ADJUST);
+  //state = update_tri_layer_state(state, _RAISE, _LOWER, _ADJUST);
 #ifdef RGBLIGHT_ENABLE
     switch (get_highest_layer(state)) {
     case _RAISE:
@@ -114,7 +114,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_sethsv_at(HSV_WHITE, 0);
       break;
     }
-    rgblight_set_effect_range( 1, RGBLED_NUM -1);
+    rgblight_set_effect_range( 1, 5);
 #endif
 return state;
 }
