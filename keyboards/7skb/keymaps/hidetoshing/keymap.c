@@ -14,6 +14,7 @@ extern uint8_t is_master;
 // entirely and just use numbers.
 enum layer_number {
   _QWERTY = 0,
+  _WIN,
   _RAISE,
   _LOWER,
   _ADJUST,
@@ -23,15 +24,18 @@ enum custom_keycodes {
   RGB_RST = SAFE_RANGE
 };
 
-#define XX_G_JA RGUI_T(KC_LANG1) // cmd or win
-#define XX_G_EN LGUI_T(KC_LANG2) // cmd or win
-#define XX_SPCR LT(_RAISE, KC_SPC) // raise or spc
-#define XX_SPCL LT(_LOWER, KC_SPC) // lower or spc
-#define XX_JA_L LT(_LOWER, KC_LANG1) // lower or JA
-#define XX_EN_L LT(_LOWER, KC_LANG2) // lower or EN
+#define XX_GESC RGUI_T(KC_ESC) // GUI ; ESC
+#define XX_G_EN LGUI_T(KC_LANG2) // GUI ; LANG2
+#define XX_SPCR LT(_RAISE, KC_SPC)
+#define XX_SPCL LT(_LOWER, KC_SPC)
+#define XX_JA_L LT(_LOWER, KC_LANG1)
+#define XX_EN_L LT(_LOWER, KC_LANG2)
+#define XX_JAWL LT(_LOWER, KC_F14)
+#define XX_ENWL LT(_LOWER, KC_F13)
 #define XX_TG_R TG(_RAISE)
 #define XX_TG_L TG(_LOWER)
 #define XX_TG_A TG(_ADJUST)
+#define XX_TG_W TG(_WIN)
 
 // layouts
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -45,7 +49,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT, DM_PLY1,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               KC_LALT, KC_LGUI, XX_EN_L, XX_SPCR,              XX_SPCR, XX_JA_L,          KC_RGUI, XX_TG_L
+               KC_LALT, KC_LGUI, XX_EN_L, XX_SPCR,              XX_SPCR, XX_JA_L,          KC_GESC, XX_TG_L
+          //`---------------------------------------------|   |--------------------------------------------'
+  ),
+
+  [_WIN] = LAYOUT( /* Base */
+  //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
+      -------, -------, -------, -------, -------, -------,     -------, -------, -------, -------, -------, -------, -------, -------, -------,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
+      -------, -------, -------, -------, -------, -------,     -------, -------, -------, -------, -------, -------, -------, -------,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
+      -------, -------, -------, -------, -------, -------,     -------, -------, -------, -------, -------, -------, -------,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+      -------, -------, -------, -------, -------, -------,     -------, -------, -------, -------, -------, -------, -------,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
+               -------, -------, XX_ENWL, -------,              -------, XX_JAWL,          -------, -------
           //`---------------------------------------------|   |--------------------------------------------'
   ),
 
@@ -67,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // LOWER Move keys
   [_LOWER] = LAYOUT(
   //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
-      XX_TG_A, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX, XXXXXXX,       KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_INS,  KC_DEL,
+      XX_TG_A, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX, XXXXXXX,     KC_MPLY, KC_MSTP, XXXXXXX, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLU, KC_VOLD,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
       _______, KC_WH_U, KC_MS_U, KC_WH_D, KC_BTN3, XXXXXXX,     XXXXXXX, KC_PGUP, KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
@@ -82,15 +100,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT( /* Base */
   //,-----------------------------------------------------|   |--------------------------------------------------------------------------------.
-      XX_TG_A, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET,
+      XX_TG_A, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_MPLY, KC_VOLU, KC_VOLD, KC_MUTE, KC_MSTP,     RGB_HUI, RGB_SAI, RGB_VAI, RGB_RST, RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, RGB_RST, RGB_MOD,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, RGB_RST, RGB_MOD, XXXXXXX, XXXXXXX, RESET  ,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XX_TG_W,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,              RGB_M_T, RGB_TOG,          KC_STOP, XXXXXXX
+               RGB_M_T, RGB_TOG, XXXXXXX, KC_STOP,              XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX
           //`---------------------------------------------|   |--------------------------------------------'
   )
 };
@@ -101,11 +119,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   //state = update_tri_layer_state(state, _RAISE, _LOWER, _ADJUST);
 #ifdef RGBLIGHT_ENABLE
     switch (get_highest_layer(state)) {
+    case _WIN:
+      rgblight_sethsv_at(HSV_AZURE, 0);
+      break;
     case _RAISE:
-      rgblight_sethsv_at(HSV_SPRINGGREEN, 0);
+      rgblight_sethsv_at(HSV_CHARTREUSE, 0);
       break;
     case _LOWER:
-      rgblight_sethsv_at(HSV_GOLDENROD, 0);
+      rgblight_sethsv_at(HSV_ORANGE, 0);
       break;
     case _ADJUST:
       rgblight_sethsv_at(HSV_RED, 0);
@@ -114,7 +135,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_sethsv_at(HSV_WHITE, 0);
       break;
     }
-    rgblight_set_effect_range( 1, 5);
+    rgblight_set_effect_range( 1, RGBLED_NUM - 1);
 #endif
 return state;
 }
